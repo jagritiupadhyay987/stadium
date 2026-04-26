@@ -58,17 +58,7 @@ Project Name: StadiumFlow
    * Stadium Simulator: A backend engine that generates synthetic crowd data, match
      schedules, and zone densities for testing and training.
       5. User Flows
-
-  5.1 Fan Journey
-   1. Entry: Fan scans QR code at the gate -> Blockchain verifies ticket -> Backend
-      logs entry.
-   2. Navigation: Fan uses "Seat Finder" -> App provides 3D path to Stand A, Row 12 ->
-      Voice guidance announces "Turn left at the next food court."
-   3. During Event: Fan receives a WhatsApp alert: "Restroom wait time near you is < 2
-      mins."
-   4. Exit: Post-match, fan receives personalized exit route to avoid the most
-      congested gate.
-Technical Architecture: StadiumFlow
+4. Technical Architecture: StadiumFlow
 
   Frontend (Client-Side)                                                               
    * Framework: React 19 (TypeScript) for component-based UI development.              
@@ -116,6 +106,16 @@ Technical Architecture: StadiumFlow
      for data consistency.
    * Docker: Multi-stage Dockerfiles for containerized deployment of both React and    
      FastAPI apps.
+
+  5.1 Fan Journey
+   1. Entry: Fan scans QR code at the gate -> Blockchain verifies ticket -> Backend
+      logs entry.
+   2. Navigation: Fan uses "Seat Finder" -> App provides 3D path to Stand A, Row 12 ->
+      Voice guidance announces "Turn left at the next food court."
+   3. During Event: Fan receives a WhatsApp alert: "Restroom wait time near you is < 2
+      mins."
+   4. Exit: Post-match, fan receives personalized exit route to avoid the most
+      congested gate.
 
 
                               
