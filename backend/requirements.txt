@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+pydantic
+twilio
+python-dotenv
+web3

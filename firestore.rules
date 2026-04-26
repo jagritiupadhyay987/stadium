@@ -1,0 +1,67 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Primitives
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isSignedIn() { return request.auth != null; }
+    function isValidId(id) { 
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); 
+    }
+
+    // Blueprints
+    function isValidUser(data) {
+      return data.keys().hasAll(['email', 'displayName', 'role']) &&
+             data.email is string && data.email.size() >= 3 && data.email.size() <= 200 &&
+             data.displayName is string && data.displayName.size() > 0 && data.displayName.size() <= 100 &&
+             data.role is string && data.role in ['ADMIN', 'FAN', 'STAFF'];
+    }
+
+    function isValidAlert(data) {
+      return data.keys().hasAll(['type', 'severity', 'location', 'time', 'description', 'status']) &&
+             data.type is string && data.type.size() > 0 && data.type.size() <= 100 &&
+             data.severity is string && data.severity.size() > 0 && data.severity.size() <= 20 &&
+             data.location is string && data.location.size() > 0 && data.location.size() <= 100 &&
+             data.time is string && data.time.size() > 0 && data.time.size() <= 50 &&
+             data.description is string && data.description.size() > 0 && data.description.size() <= 1000 &&
+             data.status is string && data.status in ['OPEN', 'ACKNOWLEDGED', 'DISPATCHED', 'RESOLVED'];
+    }
+
+    function isValidPreOrder(data) {
+      return data.keys().hasAll(['userId', 'items', 'totalItems', 'status']) &&
+             data.userId is string && data.userId == request.auth.uid &&
+             data.items is list && data.items.size() <= 20 && // Assuming bounded
+             data.totalItems is number && data.totalItems > 0 && data.totalItems <= 100 &&
+             data.status is string && data.status in ['PENDING', 'PREPARING', 'READY', 'COMPLETED'];
+    }
+
+    // Rules
+    match /users/{userId} {
+      allow get: if isSignedIn() && isValidId(userId) && request.auth.uid == userId;
+      allow create: if isSignedIn() && isValidId(userId) && request.auth.uid == userId && 
+                    isValidUser(incoming()) && incoming().role == 'FAN'; // Default newly created to FAN
+      allow update: if isSignedIn() && isValidId(userId) && request.auth.uid == userId && 
+                    isValidUser(incoming()) && incoming().role == existing().role; // Cannot change own role
+    }
+
+    match /alerts/{alertId} {
+      allow read: if isSignedIn() && isValidId(alertId); // For now, any signed in user can read alerts
+      allow create: if isSignedIn() && isValidId(alertId) && isValidAlert(incoming());
+      allow update: if isSignedIn() && isValidId(alertId) && isValidAlert(incoming()) &&
+                    incoming().diff(existing()).affectedKeys().hasOnly(['status']);
+    }
+
+    match /preorders/{orderId} {
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow get: if isSignedIn() && isValidId(orderId) && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && isValidId(orderId) && isValidPreOrder(incoming());
+      // No updates allowed by default to orders
+    }
+  }
+}

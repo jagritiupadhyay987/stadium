@@ -1,0 +1,57 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user of the application",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["ADMIN", "FAN", "STAFF"] }
+      },
+      "required": ["email", "displayName", "role"]
+    },
+    "Alert": {
+      "title": "Alert",
+      "description": "An active or resolved incident",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "severity": { "type": "string" },
+        "location": { "type": "string" },
+        "time": { "type": "string" },
+        "description": { "type": "string" },
+        "recommendation": { "type": "string" },
+        "status": { "type": "string", "enum": ["OPEN", "ACKNOWLEDGED", "DISPATCHED", "RESOLVED"] }
+      },
+      "required": ["type", "severity", "location", "time", "description", "status"]
+    },
+    "PreOrder": {
+      "title": "PreOrder",
+      "description": "A food pre-order",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "items": { "type": "array" },
+        "totalItems": { "type": "number" },
+        "status": { "type": "string", "enum": ["PENDING", "PREPARING", "READY", "COMPLETED"] },
+        "pickupTimeWindow": { "type": "string" }
+      },
+      "required": ["userId", "items", "totalItems", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles"
+    },
+    "/alerts/{alertId}": {
+      "schema": { "$ref": "#/entities/Alert" },
+      "description": "System alerts and incidents"
+    },
+    "/preorders/{orderId}": {
+      "schema": { "$ref": "#/entities/PreOrder" },
+      "description": "Food pre-orders by fans"
+    }
+  }
+}

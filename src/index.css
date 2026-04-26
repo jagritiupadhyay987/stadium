@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Roboto Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-stadium-bg: #0A1628;
+  --color-stadium-surface: #112240;
+  --color-stadium-surface-light: #1A365D;
+  --color-neon-green: #00E676;
+  --color-neon-yellow: #FFD600;
+  --color-neon-red: #FF1744;
+  --color-neon-blue: #29B6F6;
+}
+
+body {
+  background-color: var(--color-stadium-bg, #0A1628);
+  color: #F8FAFC;
+}
