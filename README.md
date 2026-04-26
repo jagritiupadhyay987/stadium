@@ -15,18 +15,13 @@ Product Requirements Document: AdaptiveMind
 
   ---
 
-  2. Target Personas
-  ┌───────────────────┬───────────────────────────────────────────────┬───────────────────────────────────────────────────┐
-  │ Persona           │ Need                                          │ Goal                                              │
-  ├───────────────────┼───────────────────────────────────────────────┼───────────────────────────────────────────────────┤
-  │ The Self-Learner  │ Struggles with information overload and lack  │ Wants a personalized roadmap that adapts to their │
-  │                   │ of structure.                                 │ pace.                                             │
-  │ The Struggling    │ Faces specific "roadblocks" or misconceptions │ Needs real-time diagnostic feedback and           │
-  │ Student           │ that stall progress.                          │ alternative explanations.                         │
-  │ The Power Learner │ Needs to master complex subjects quickly with │ Uses SRS (Spaced Repetition) and Knowledge Graphs │
-  │                   │ high retention.                               │ to see the "big picture."                         │
-  └───────────────────┴───────────────────────────────────────────────┴───────────────────────────────────────────────────┘
-  ---
+  2. Target Persona: The "Stalled" Self-Learner
+  The Stalled Self-Learner is a motivated individual or student tackling complex, non-linear subjects who frequently hits       
+  "cognitive roadblocks" where traditional static content fails to explain the why behind their errors. They suffer from        
+  information overload and require a system that filters out noise, identifies their specific misconceptions in real-time, and  
+  provides a dynamic, structured roadmap. Their primary goal is to achieve deep mastery and long-term retention without the     
+  frustration of "panic zones" or the inefficiency of reviewing already-mastered material. They value personalized, Socratic    
+  feedback and visual progress tracking that adapts to their unique learning pace and confidence levels.
 
   3. Key Features & Functional Requirements
 
